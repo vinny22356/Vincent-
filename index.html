@@ -1,13 +1,48 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Football Betting Stats Tool</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantasy Betting Tool</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <h1>Fantasy Football Betting Stats Tool</h1>
-  <p>Analyze football match statistics to make smarter betting decisions.</p>
-</body>
 
+  <h1>⚽ Fantasy Football Betting Tool</h1>
+
+  <div class="container">
+    <input type="number" id="teamA" placeholder="Team A avg goals">
+    <input type="number" id="teamB" placeholder="Team B avg goals">
+
+    <button onclick="calculateBet()">Analyze</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateBet() {
+      const teamA = parseFloat(document.getElementById("teamA").value);
+      const teamB = parseFloat(document.getElementById("teamB").value);
+
+      if (isNaN(teamA) || isNaN(teamB)) {
+        alert("Enter valid numbers!");
+        return;
+      }
+
+      const totalGoals = teamA + teamB;
+
+      let over25 = totalGoals > 2.5 ? "YES 🔥" : "NO ❌";
+      let btts = teamA > 0.8 && teamB > 0.8 ? "YES ⚽" : "NO ❌";
+      let confidence = Math.min(100, (totalGoals / 4) * 100).toFixed(0);
+
+      document.getElementById("result").innerHTML = `
+        <p>Over 2.5: <strong>${over25}</strong></p>
+        <p>BTTS: <strong>${btts}</strong></p>
+        <p>Confidence: <strong>${confidence}%</strong></p>
+      `;
+    }
+  </script>
+
+</body>
 </html>
