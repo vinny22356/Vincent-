@@ -9,60 +9,44 @@ function calculateBet() {
 
   const totalGoals = teamA + teamB;
 
-  let over25 = totalGoals > 2.5 ? "YES 🔥" : "NO ❌";
-  let under25 = totalGoals < 2.5 ? "YES 🧊" : "NO ❌";
-  let btts = teamA > 0.8 && teamB > 0.8 ? "YES ⚽" : "NO ❌";
-
   let confidence = Math.min(100, (totalGoals / 4) * 100).toFixed(0);
 
-  let risk = "High ⚠️";
-  if (confidence > 70) risk = "Low ✅";
-  else if (confidence > 50) risk = "Medium ⚖️";
+  let bestPick = "";
+  let safeBet = "";
+  let avoid = "";
 
-  document.getElementById("result").innerHTML = `
-    <p>Over 2.5: <strong>${over25}</strong></p>
-    <p>Under 2.5: <strong>${under25}</strong></p>
-    <p>BTTS: <strong>${btts}</strong></p>
-    <p>Confidence: <strong>${confidence}%</strong></p>
-    <p>Risk Level: <strong>${risk}</strong></p>
-  `;
+  if (totalGoals > 2.5) {
+    bestPick = "🔥 Over 2.5";
+    safeBet = "⚽ BTTS";
+    avoid = "❌ Under 2.5";
+  } else {
+    bestPick = "🧊 Under 2.5";
+    safeBet = "⚽ BTTS (Risky)";
+    avoid = "❌ Over 2.5";
+  }
 
-  // Save history
-  let history = JSON.parse(localStorage.getItem("history")) || [];
+  const resultText = `
+🎯 BET SLIP
 
-  let newEntry = `
-  Over 2.5: ${over25} | 
-  BTTS: ${btts} | 
-  Confidence: ${confidence}% | 
-  Risk: ${risk}
-  `;
+Best Pick: ${bestPick}
+Safe Bet: ${safeBet}
+Avoid: ${avoid}
+Confidence: ${confidence}%
+`;
 
-  history.unshift(newEntry);
-  localStorage.setItem("history", JSON.stringify(history));
-
-  displayHistory();
+  document.getElementById("result").innerText = resultText;
 }
 
-function displayHistory() {
-  let history = JSON.parse(localStorage.getItem("history")) || [];
-  let historyDiv = document.getElementById("history");
-
-  historyDiv.innerHTML = history
-    .slice(0, 5)
-    .map(item => `<p>${item}</p>`)
-    .join("");
-}
-
-function shareResult() {
-  const result = document.getElementById("result").innerText;
-  const text = encodeURIComponent("My prediction:\n" + result);
-  window.open("https://twitter.com/intent/tweet?text=" + text, "_blank");
-}
-
+// COPY
 function copyResult() {
-  const result = document.getElementById("result").innerText;
-  navigator.clipboard.writeText(result);
-  alert("Copied to clipboard!");
+  const text = document.getElementById("result").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
 }
 
+// SHARE
+function shareResult() {
+  const text = encodeURIComponent(document.getElementById("result").innerText);
+  window.open("https://wa.me/?text=" + text, "_blank");
+}
 window.onload = displayHistory;
