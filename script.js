@@ -14,39 +14,59 @@ function calculateBet() {
   let bestPick = "";
   let safeBet = "";
   let avoid = "";
+  let aiMessage = "";
 
   if (totalGoals > 2.5) {
     bestPick = "🔥 Over 2.5";
     safeBet = "⚽ BTTS";
     avoid = "❌ Under 2.5";
+    aiMessage = "High attacking potential detected. Expect goals from both sides.";
   } else {
     bestPick = "🧊 Under 2.5";
     safeBet = "⚽ BTTS (Risky)";
     avoid = "❌ Over 2.5";
+    aiMessage = "Low goal probability. Defensive structure likely to dominate.";
   }
 
   const resultText = `
-🎯 BET SLIP
+🤖 AI BETTING ANALYSIS
 
-Best Pick: ${bestPick}
-Safe Bet: ${safeBet}
-Avoid: ${avoid}
-Confidence: ${confidence}%
+${aiMessage}
+
+🎯 BEST PICK: ${bestPick}
+💰 SAFE BET: ${safeBet}
+⚠️ AVOID: ${avoid}
+
+📊 Confidence: ${confidence}%
 `;
 
   document.getElementById("result").innerText = resultText;
 }
 
-// COPY
+
+// COPY RESULT
 function copyResult() {
   const text = document.getElementById("result").innerText;
+
+  if (!text) {
+    alert("No result to copy!");
+    return;
+  }
+
   navigator.clipboard.writeText(text);
-  alert("Copied!");
+  alert("Copied to clipboard!");
 }
 
-// SHARE
+
+// SHARE (WhatsApp)
 function shareResult() {
-  const text = encodeURIComponent(document.getElementById("result").innerText);
-  window.open("https://wa.me/?text=" + text, "_blank");
+  const text = document.getElementById("result").innerText;
+
+  if (!text) {
+    alert("No result to share!");
+    return;
+  }
+
+  const encodedText = encodeURIComponent(text);
+  window.open("https://wa.me/?text=" + encodedText, "_blank");
 }
-window.onload = displayHistory;
