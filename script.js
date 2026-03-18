@@ -1,3 +1,4 @@
+// MAIN FUNCTION
 function calculateBet() {
   const teamA = parseFloat(document.getElementById("teamA").value);
   const teamB = parseFloat(document.getElementById("teamB").value);
@@ -9,33 +10,55 @@ function calculateBet() {
 
   const totalGoals = teamA + teamB;
 
-  let confidence = Math.min(100, (totalGoals / 4) * 100).toFixed(0);
+  // Score prediction
+  const predictedA = Math.round(teamA);
+  const predictedB = Math.round(teamB);
 
+  // Win probability
+  const winChanceA = Math.round((teamA / totalGoals) * 100);
+  const winChanceB = 100 - winChanceA;
+
+  // AI Logic
   let bestPick = "";
   let safeBet = "";
   let avoid = "";
   let aiMessage = "";
 
-  if (totalGoals > 2.5) {
-    bestPick = "🔥 Over 2.5";
-    safeBet = "⚽ BTTS";
+  if (totalGoals > 3) {
+    bestPick = "🔥 Over 2.5 Goals";
+    safeBet = "⚽ BTTS (Both Teams To Score)";
     avoid = "❌ Under 2.5";
     aiMessage = "High attacking potential detected. Expect goals from both sides.";
+  } else if (totalGoals > 2) {
+    bestPick = "⚡ Over 1.5 Goals";
+    safeBet = "⚽ BTTS";
+    avoid = "❌ 0-0 Correct Score";
+    aiMessage = "Balanced game with moderate scoring chances.";
   } else {
-    bestPick = "🧊 Under 2.5";
-    safeBet = "⚽ BTTS (Risky)";
-    avoid = "❌ Over 2.5";
-    aiMessage = "Low goal probability. Defensive structure likely to dominate.";
+    bestPick = "🧊 Under 2.5 Goals";
+    safeBet = "🛡️ Double Chance";
+    avoid = "❌ Over 3.5";
+    aiMessage = "Low attacking output. Likely a defensive match.";
   }
 
+  // Confidence
+  const confidence = Math.min(100, (totalGoals / 4) * 100).toFixed(0);
+
+  // Final Output
   const resultText = `
 🤖 AI BETTING ANALYSIS
 
 ${aiMessage}
 
-🎯 BEST PICK: ${bestPick}
-💰 SAFE BET: ${safeBet}
-⚠️ AVOID: ${avoid}
+📊 Predicted Score: ${predictedA} - ${predictedB}
+
+📈 Win Probability:
+Team A: ${winChanceA}%
+Team B: ${winChanceB}%
+
+🎯 Best Pick: ${bestPick}
+💰 Safe Bet: ${safeBet}
+⚠️ Avoid: ${avoid}
 
 📊 Confidence: ${confidence}%
 `;
@@ -44,7 +67,7 @@ ${aiMessage}
 }
 
 
-// COPY RESULT
+// COPY FUNCTION
 function copyResult() {
   const text = document.getElementById("result").innerText;
 
@@ -53,12 +76,13 @@ function copyResult() {
     return;
   }
 
-  navigator.clipboard.writeText(text);
-  alert("Copied to clipboard!");
+  navigator.clipboard.writeText(text)
+    .then(() => alert("Copied to clipboard! 📋"))
+    .catch(() => alert("Copy failed"));
 }
 
 
-// SHARE (WhatsApp)
+// SHARE FUNCTION
 function shareResult() {
   const text = document.getElementById("result").innerText;
 
@@ -67,6 +91,12 @@ function shareResult() {
     return;
   }
 
-  const encodedText = encodeURIComponent(text);
-  window.open("https://wa.me/?text=" + encodedText, "_blank");
+  if (navigator.share) {
+    navigator.share({
+      title: "AI Betting Prediction",
+      text: text
+    });
+  } else {
+    alert("Sharing not supported on this device");
+  }
 }
