@@ -47,7 +47,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-#result p {
+#result p, #history p {
   background: #1f2937;
   padding: 10px;
   border-radius: 8px;
