@@ -1,65 +1,8 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Fantasy Football Tool</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #020617, #0f172a);
-      color: #fff;
-      text-align: center;
-    }
-
-    h1 {
-      margin-top: 30px;
-      color: #38bdf8;
-    }
-
-    .container {
-      background: #111827;
-      padding: 25px;
-      border-radius: 15px;
-      max-width: 320px;
-      margin: 40px auto;
-      box-shadow: 0 0 30px rgba(0,0,0,0.7);
-    }
-
-    input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      background: #1f2937;
-      color: #fff;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      background: #38bdf8;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #5ad1ff;
-      transform: scale(1.05);
-    }
-
-    #result p {
-      background: #1f2937;
-      padding: 10px;
-      border-radius: 8px;
-      margin: 5px 0;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -75,54 +18,15 @@
 
   <div id="result"></div>
 
+  <h3>📊 Prediction History</h3>
+  <div id="history"></div>
+
   <button onclick="shareResult()">Share Result 🚀</button>
   <button onclick="copyResult()">Copy Result 📋</button>
 
 </div>
 
-<script>
-function calculateBet() {
-  const teamA = parseFloat(document.getElementById("teamA").value);
-  const teamB = parseFloat(document.getElementById("teamB").value);
-
-  if (isNaN(teamA) || isNaN(teamB)) {
-    alert("Enter valid numbers!");
-    return;
-  }
-
-  const totalGoals = teamA + teamB;
-
-  let over25 = totalGoals > 2.5 ? "YES 🔥" : "NO ❌";
-  let under25 = totalGoals < 2.5 ? "YES 🧊" : "NO ❌";
-  let btts = teamA > 0.8 && teamB > 0.8 ? "YES ⚽" : "NO ❌";
-
-  let confidence = Math.min(100, (totalGoals / 4) * 100).toFixed(0);
-
-  let risk = "High ⚠️";
-  if (confidence > 70) risk = "Low ✅";
-  else if (confidence > 50) risk = "Medium ⚖️";
-
-  document.getElementById("result").innerHTML = `
-    <p>Over 2.5: <strong>${over25}</strong></p>
-    <p>Under 2.5: <strong>${under25}</strong></p>
-    <p>BTTS: <strong>${btts}</strong></p>
-    <p>Confidence: <strong>${confidence}%</strong></p>
-    <p>Risk Level: <strong>${risk}</strong></p>
-  `;
-}
-
-function shareResult() {
-  const result = document.getElementById("result").innerText;
-  const text = encodeURIComponent("My prediction:\n" + result);
-  window.open("https://twitter.com/intent/tweet?text=" + text, "_blank");
-}
-
-function copyResult() {
-  const result = document.getElementById("result").innerText;
-  navigator.clipboard.writeText(result);
-  alert("Copied to clipboard!");
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
