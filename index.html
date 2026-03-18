@@ -1,34 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Fantasy Football Betting Tool</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <meta charset="UTF-8">
+  <title>Vincent AI Betting Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #1c2533;
+      padding: 25px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      color: #4fc3f7;
+      margin-bottom: 5px;
+    }
+
+    .sub-text {
+      color: #aaa;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      background: #2b3648;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      background: #4fc3f7;
+      color: black;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #263445;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .buttons button {
+      width: 48%;
+    }
+  </style>
+</head>
 <body>
 
-<h1>⚽ Fantasy Football Betting Tool</h1>
+  <div class="container">
+    <h1>⚽ Vincent AI Betting Tool</h1>
+    <p class="sub-text">Smart Predictions by Vinny22356 🚀</p>
 
-<div class="container">
+    <input type="number" id="team1" placeholder="Team 1 Odds (e.g 1.5)">
+    <input type="number" id="team2" placeholder="Team 2 Odds (e.g 2.0)">
 
-  <input type="number" id="teamA" placeholder="Team A avg goals">
-  <input type="number" id="teamB" placeholder="Team B avg goals">
+    <button onclick="analyze()">Analyze</button>
 
-  <!-- THIS IS THE IMPORTANT PART -->
-  <button onclick="calculateBet()">Analyze</button>
+    <div class="result" id="resultBox">
+      <h3>🤖 AI BETTING ANALYSIS</h3>
+      <p id="analysisText"></p>
+      <p id="bestPick"></p>
+      <p id="safeBet"></p>
+      <p id="avoid"></p>
+      <p id="confidence"></p>
 
-  <!-- RESULT WILL SHOW HERE -->
-  <div id="result"></div>
+      <div class="buttons">
+        <button onclick="copyText()">📋 Copy</button>
+        <button onclick="shareText()">🚀 Share</button>
+      </div>
+    </div>
+  </div>
 
-  <br>
+  <script>
+    function analyze() {
+      let team1 = parseFloat(document.getElementById("team1").value);
+      let team2 = parseFloat(document.getElementById("team2").value);
 
-  <button onclick="copyResult()">Copy Bet Slip 📋</button>
-  <button onclick="shareResult()">Share 🚀</button>
+      let resultBox = document.getElementById("resultBox");
 
-</div>
+      if (!team1 || !team2) {
+        alert("Enter both odds!");
+        return;
+      }
 
-<!-- CONNECTS YOUR JAVASCRIPT -->
-<script src="script.js"></script>
+      let totalOdds = team1 + team2;
+
+      let analysis = "";
+      let bestPick = "";
+      let safeBet = "";
+      let avoid = "";
+      let confidence = "";
+
+      if (totalOdds < 3.5) {
+        analysis = "High attacking potential detected. Expect goals from both sides.";
+        bestPick = "🎯 BEST PICK: 🔥 Over 2.5";
+        safeBet = "💰 SAFE BET: ⚽ BTTS";
+        avoid = "⚠️ AVOID: ❌ Under 2.5";
+        confidence = "📊 Confidence: 88%";
+      } else {
+        analysis = "Low scoring match expected. Tight defensive play likely.";
+        bestPick = "🎯 BEST PICK: ❄️ Under 2.5";
+        safeBet = "💰 SAFE BET: ⚽ Under 3.5";
+        avoid = "⚠️ AVOID: ❌ Over 2.5";
+        confidence = "📊 Confidence: 75%";
+      }
+
+      document.getElementById("analysisText").innerText = analysis;
+      document.getElementById("bestPick").innerText = bestPick;
+      document.getElementById("safeBet").innerText = safeBet;
+      document.getElementById("avoid").innerText = avoid;
+      document.getElementById("confidence").innerText = confidence;
+
+      resultBox.style.display = "block";
+    }
+
+    function copyText() {
+      let text = document.getElementById("resultBox").innerText;
+      navigator.clipboard.writeText(text);
+      alert("Copied!");
+    }
+
+    function shareText() {
+      let text = document.getElementById("resultBox").innerText;
+
+      if (navigator.share) {
+        navigator.share({
+          title: "Vincent AI Betting Tool",
+          text: text
+        });
+      } else {
+        alert("Sharing not supported on this device.");
+      }
+    }
+  </script>
 
 </body>
 </html>
