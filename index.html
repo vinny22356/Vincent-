@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fantasy Football Tool</title>
+  <title>Fantasy Football Betting Tool</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,15 +14,20 @@
   <input type="number" id="teamA" placeholder="Team A avg goals">
   <input type="number" id="teamB" placeholder="Team B avg goals">
 
+  <!-- THIS IS THE IMPORTANT PART -->
   <button onclick="calculateBet()">Analyze</button>
 
+  <!-- RESULT WILL SHOW HERE -->
   <div id="result"></div>
+
+  <br>
 
   <button onclick="copyResult()">Copy Bet Slip 📋</button>
   <button onclick="shareResult()">Share 🚀</button>
 
 </div>
 
+<!-- CONNECTS YOUR JAVASCRIPT -->
 <script src="script.js"></script>
 
 </body>
