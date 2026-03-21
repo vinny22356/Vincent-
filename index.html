@@ -1,12 +1,28 @@
-<select id="leagueSelect">
-  <option value="">Select a league</option>
-  <option value="premier">Premier League</option>
-  <option value="laliga">La Liga</option>
-  <option value="bundesliga">Bundesliga</option>
-  <option value="seriea">Serie A</option>
-  <option value="ligue1">Ligue 1</option>
-  <option value="belgium">Belgium Pro League</option>
-  <option value="czech">Czech League</option>
-  <option value="russia">Russia League</option>
-  <option value="portugal">Portugal League</option>
-</select>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Football League Stats</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>⚽ Top Football Leagues</h1>
+
+  <select id="leagueSelect" onchange="showLeague()">
+    <option value="">Select a league</option>
+    <option value="premier">Premier League</option>
+    <option value="laliga">La Liga</option>
+    <option value="bundesliga">Bundesliga</option>
+    <option value="seriea">Serie A</option>
+    <option value="ligue1">Ligue 1</option>
+    <option value="belgium">Belgium Pro League</option>
+    <option value="czech">Czech League</option>
+    <option value="russia">Russia League</option>
+    <option value="portugal">Portugal League</option>
+  </select>
+
+  <div id="result" class="teams-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
