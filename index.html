@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Football League Stats</title>
+  <meta charset="UTF-8">
+  <title>Team Analysis</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>⚽ Top Football Leagues</h1>
+<h1 id="teamName">Team</h1>
 
-  <select id="leagueSelect" onchange="showLeague()">
-    <option value="">Select a league</option>
-    <option value="premier">Premier League</option>
-    <option value="laliga">La Liga</option>
-    <option value="bundesliga">Bundesliga</option>
-    <option value="seriea">Serie A</option>
-    <option value="ligue1">Ligue 1</option>
-    <option value="belgium">Belgium Pro League</option>
-    <option value="czech">Czech League</option>
-    <option value="russia">Russia League</option>
-    <option value="portugal">Portugal League</option>
-  </select>
+<div class="card">
 
-  <div id="result" class="teams-container"></div>
+  <h2>🤖 AI BETTING ANALYSIS</h2>
 
-  <script src="script.js"></script>
+  <p id="analysisText"></p>
+
+  <p id="bestPick"></p>
+  <p id="safeBet"></p>
+  <p id="avoidBet"></p>
+  <p id="confidence"></p>
+
+  <button onclick="goBack()">⬅ Back</button>
+
+</div>
+
+<script src="team.js"></script>
+
 </body>
 </html>
