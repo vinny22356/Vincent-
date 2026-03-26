@@ -1,70 +1,46 @@
-const leagues = {
-  premier: [
-    "Arsenal","Aston Villa","Bournemouth","Brentford","Brighton",
-    "Burnley","Chelsea","Crystal Palace","Everton","Fulham",
-    "Liverpool","Luton Town","Man City","Man United","Newcastle",
-    "Nottingham Forest","Sheffield United","Tottenham","West Ham","Wolves"
-  ],
+const params = new URLSearchParams(window.location.search);
+const team = params.get("name");
 
-  laliga: [
-    "Alaves","Almeria","Athletic Bilbao","Atletico Madrid","Barcelona",
-    "Cadiz","Celta Vigo","Getafe","Girona","Granada",
-    "Las Palmas","Mallorca","Osasuna","Rayo Vallecano","Real Betis",
-    "Real Madrid","Real Sociedad","Sevilla","Valencia","Villarreal"
-  ],
+document.getElementById("teamName").innerText = team.toUpperCase();
 
-  bundesliga: [
-    "Bayern Munich","Dortmund","RB Leipzig","Bayer Leverkusen",
-    "Eintracht Frankfurt","Union Berlin","Freiburg","Hoffenheim",
-    "Werder Bremen","Wolfsburg","Mainz","Stuttgart",
-    "Augsburg","Bochum","Heidenheim","Darmstadt","Koln","Monchengladbach"
-  ],
+let data = {
+  sporting: {
+    text: "Strong attacking team with consistent scoring.",
+    best: "🔥 Over 2.5",
+    safe: "⚽ BTTS",
+    avoid: "❌ Under 2.5",
+    confidence: "85%"
+  },
 
-  seriea: [
-    "AC Milan","Inter Milan","Juventus","Napoli","Roma",
-    "Lazio","Atalanta","Fiorentina","Bologna","Torino",
-    "Genoa","Sassuolo","Udinese","Empoli","Cagliari",
-    "Verona","Lecce","Salernitana","Monza","Frosinone"
-  ],
+  benfica: {
+    text: "High possession and goal chances.",
+    best: "🔥 Over 1.5",
+    safe: "⚽ Home Win",
+    avoid: "❌ Under 1.5",
+    confidence: "80%"
+  },
 
-  ligue1: [
-    "PSG","Marseille","Lyon","Monaco","Lille",
-    "Nice","Lens","Rennes","Strasbourg","Montpellier",
-    "Nantes","Reims","Toulouse","Brest","Clermont",
-    "Lorient","Metz","Le Havre"
-  ],
-
-  belgium: [
-    "Club Brugge","Anderlecht","Genk","Antwerp","Gent",
-    "Standard Liege","Charleroi","Mechelen","Westerlo","Kortrijk"
-  ],
-
-  czech: [
-    "Sparta Prague","Slavia Prague","Viktoria Plzen",
-    "Slovan Liberec","Banik Ostrava","Sigma Olomouc"
-  ],
-
-  russia: [
-    "Zenit","CSKA Moscow","Spartak Moscow","Lokomotiv Moscow",
-    "Dynamo Moscow","Krasnodar","Rostov","Rubin Kazan"
-  ],
-
-  portugal: [
-    "Benfica","Porto","Sporting CP","Braga","Vitoria Guimaraes",
-    "Boavista","Famalicao","Casa Pia","Estoril"
-  ]
+  porto: {
+    text: "Balanced defense and attack.",
+    best: "🔥 Under 3.5",
+    safe: "⚽ Double Chance",
+    avoid: "❌ Over 3.5",
+    confidence: "75%"
+  }
 };
 
-function showLeague() {
-  const league = document.getElementById("leagueSelect").value;
-  const result = document.getElementById("result");
+let teamData = data[team];
 
-  if (!league) {
-    result.innerHTML = "";
-    return;
-  }
+if (teamData) {
+  document.getElementById("analysisText").innerText = teamData.text;
+  document.getElementById("bestPick").innerText = "🎯 BEST: " + teamData.best;
+  document.getElementById("safeBet").innerText = "💰 SAFE: " + teamData.safe;
+  document.getElementById("avoidBet").innerText = "⚠️ AVOID: " + teamData.avoid;
+  document.getElementById("confidence").innerText = "📊 Confidence: " + teamData.confidence;
+} else {
+  document.getElementById("analysisText").innerText = "No data available.";
+}
 
-  result.innerHTML = leagues[league]
-    .map(team => `<div class="team-card">${team}</div>`)
-    .join("");
+function goBack() {
+  window.history.back();
 }
