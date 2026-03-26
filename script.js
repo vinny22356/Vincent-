@@ -1,46 +1,45 @@
-const params = new URLSearchParams(window.location.search);
-const team = params.get("name");
+const leagues = {
 
-document.getElementById("teamName").innerText = team.toUpperCase();
+  portugal: [
+    { name: "Benfica", id: "benfica" },
+    { name: "Porto", id: "porto" },
+    { name: "Sporting CP", id: "sporting" },
+    { name: "Braga", id: "braga" },
+    { name: "Boavista", id: "boavista" }
+  ],
 
-let data = {
-  sporting: {
-    text: "Strong attacking team with consistent scoring.",
-    best: "🔥 Over 2.5",
-    safe: "⚽ BTTS",
-    avoid: "❌ Under 2.5",
-    confidence: "85%"
-  },
+  england: [
+    { name: "Manchester City", id: "mancity" },
+    { name: "Arsenal", id: "arsenal" },
+    { name: "Liverpool", id: "liverpool" },
+    { name: "Chelsea", id: "chelsea" }
+  ],
 
-  benfica: {
-    text: "High possession and goal chances.",
-    best: "🔥 Over 1.5",
-    safe: "⚽ Home Win",
-    avoid: "❌ Under 1.5",
-    confidence: "80%"
-  },
+  spain: [
+    { name: "Real Madrid", id: "realmadrid" },
+    { name: "Barcelona", id: "barcelona" },
+    { name: "Atletico Madrid", id: "atletico" }
+  ]
 
-  porto: {
-    text: "Balanced defense and attack.",
-    best: "🔥 Under 3.5",
-    safe: "⚽ Double Chance",
-    avoid: "❌ Over 3.5",
-    confidence: "75%"
-  }
 };
 
-let teamData = data[team];
+function loadTeams() {
+  const league = document.getElementById("leagueSelect").value;
+  const teamsDiv = document.getElementById("teams");
 
-if (teamData) {
-  document.getElementById("analysisText").innerText = teamData.text;
-  document.getElementById("bestPick").innerText = "🎯 BEST: " + teamData.best;
-  document.getElementById("safeBet").innerText = "💰 SAFE: " + teamData.safe;
-  document.getElementById("avoidBet").innerText = "⚠️ AVOID: " + teamData.avoid;
-  document.getElementById("confidence").innerText = "📊 Confidence: " + teamData.confidence;
-} else {
-  document.getElementById("analysisText").innerText = "No data available.";
+  teamsDiv.innerHTML = "";
+
+  leagues[league].forEach(team => {
+    const btn = document.createElement("button");
+    btn.innerText = team.name;
+
+    btn.onclick = () => {
+      window.location.href = "team.html?name=" + team.id;
+    };
+
+    teamsDiv.appendChild(btn);
+  });
 }
 
-function goBack() {
-  window.history.back();
-}
+// Load default league on start
+loadTeams();
