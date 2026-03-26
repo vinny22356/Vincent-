@@ -2,30 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Team Analysis</title>
+  <title>Fantasy Football Tool</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1 id="teamName">Team</h1>
+<h1>⚽ Top Football Leagues</h1>
 
-<div class="card">
+<select id="leagueSelect" onchange="loadTeams()">
+  <option value="portugal">Portugal League</option>
+  <option value="england">Premier League</option>
+  <option value="spain">La Liga</option>
+</select>
 
-  <h2>🤖 AI BETTING ANALYSIS</h2>
+<div id="teams" class="teams"></div>
 
-  <p id="analysisText"></p>
-
-  <p id="bestPick"></p>
-  <p id="safeBet"></p>
-  <p id="avoidBet"></p>
-  <p id="confidence"></p>
-
-  <button onclick="goBack()">⬅ Back</button>
-
-</div>
-
-<script src="team.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
