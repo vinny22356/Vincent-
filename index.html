@@ -1,24 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Fantasy Football Tool</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<script>
+const params = new URLSearchParams(window.location.search);
+const team1 = params.get("team1");
+const team2 = params.get("team2");
 
-<body>
+document.getElementById("match").innerText = `${team1} VS ${team2}`;
 
-<h1>⚽ Top Football Leagues</h1>
+// FULL TEAM RATINGS
+const ratings = {
 
-<select id="leagueSelect" onchange="loadTeams()">
-  <option value="portugal">Portugal League</option>
-  <option value="england">Premier League</option>
-  <option value="spain">La Liga</option>
-</select>
+  // ENGLAND
+  "Manchester City": 95, "Arsenal": 92, "Liverpool": 91, "Chelsea": 86,
+  "Manchester United": 85, "Tottenham": 87, "Newcastle": 88,
+  "Brighton": 84, "West Ham": 83, "Aston Villa": 85,
+  "Everton": 78, "Fulham": 79, "Brentford": 80,
+  "Crystal Palace": 78, "Wolves": 77,
+  "Nottingham Forest": 75, "Bournemouth": 74,
+  "Sheffield United": 70, "Burnley": 72, "Luton Town": 68,
 
-<div id="teams" class="teams"></div>
+  // SPAIN
+  "Real Madrid": 95, "Barcelona": 93, "Atletico Madrid": 91,
+  "Sevilla": 85, "Real Sociedad": 86, "Villarreal": 85,
+  "Valencia": 82, "Real Betis": 84, "Athletic Bilbao": 87,
+  "Girona": 83, "Osasuna": 80, "Getafe": 78,
+  "Celta Vigo": 79, "Mallorca": 77, "Las Palmas": 75,
+  "Alaves": 74, "Cadiz": 73, "Granada": 72,
+  "Rayo Vallecano": 78, "Espanyol": 80,
 
-<script src="script.js"></script>
+  // ITALY
+  "Inter Milan": 93, "AC Milan": 90, "Juventus": 89,
+  "Napoli": 91, "Roma": 87, "Lazio": 86,
+  "Atalanta": 88, "Fiorentina": 84, "Bologna": 83,
+  "Torino": 82, "Sassuolo": 80, "Udinese": 79,
+  "Monza": 80, "Genoa": 78, "Cagliari": 76,
+  "Lecce": 75, "Empoli": 74, "Verona": 73,
+  "Salernitana": 70, "Parma": 77,
 
-</body>
-</html>
+  // GERMANY
+  "Bayern Munich": 96, "Borussia Dortmund": 90,
+  "RB Leipzig": 89, "Bayer Leverkusen": 92,
+  "Eintracht Frankfurt": 85, "Wolfsburg": 83,
+  "Borussia Monchengladbach": 82, "Union Berlin": 84,
+  "Freiburg": 84, "Hoffenheim": 82,
+  "Stuttgart": 83, "Werder Bremen": 80,
+  "Augsburg": 78, "Mainz": 78,
+  "Bochum": 75, "Heidenheim": 74,
+  "Darmstadt": 72, "Koln": 79,
+
+  // PORTUGAL
+  "Benfica": 90, "Porto": 89, "Sporting CP": 91, "Braga": 86,
+  "Vitoria Guimaraes": 83, "Boavista": 80,
+  "Famalicao": 79, "Casa Pia": 77,
+  "Estoril": 76, "Rio Ave": 78,
+  "Gil Vicente": 77, "Arouca": 78,
+  "Vizela": 75, "Chaves": 74,
+  "Farense": 73, "Portimonense": 75,
+  "Moreirense": 78, "Nacional": 76,
+
+  // BELGIUM
+  "Club Brugge": 90, "Anderlecht": 88, "Genk": 87,
+  "Gent": 85, "Union SG": 89, "Antwerp": 88,
+  "Standard Liege": 83, "Charleroi": 80,
+  "Mechelen": 79, "OH Leuven": 78,
+  "Kortrijk": 76, "Eupen": 74,
+  "Westerlo": 77, "Cercle Brugge": 82,
+  "Sint-Truiden": 79, "RWDM": 75,
+
+  // RUSSIA
+  "Zenit": 91, "CSKA Moscow": 88,
+  "Spartak Moscow": 87, "Lokomotiv Moscow": 86,
+  "Dynamo Moscow": 85, "Krasnodar": 86,
+  "Rubin Kazan": 82, "Rostov": 83,
+  "Akhmat Grozny": 79, "Ural": 78,
+  "Khimki": 75, "Sochi": 80,
+  "Orenburg": 77, "Baltika": 74,
+  "Fakel": 73, "Nizhny Novgorod": 76
+};
+
+// DEFAULT
+const r1 = ratings[team1] || 75;
+const r2 = ratings[team2] || 75;
+
+const diff = Math.abs(r1 - r2);
+
+let analysis, best, safe, avoid;
+
+if (diff > 10) {
+  analysis = "Clear strength difference detected.";
+  best = "🔥 Win Favorite";
+  safe = "⚽ Over 1.5 Goals";
+  avoid = "❌ Draw";
+} else {
+  analysis = "Balanced competitive match.";
+  best = "🔥 BTTS";
+  safe = "⚽ Over 2.5 Goals";
+  avoid = "❌ Heavy Win Bet";
+}
+
+const confidence = Math.min(95, 65 + diff);
+
+document.getElementById("analysis").innerText = analysis;
+document.getElementById("best").innerText = "BEST: " + best;
+document.getElementById("safe").innerText = "SAFE: " + safe;
+document.getElementById("avoid").innerText = "AVOID: " + avoid;
+document.getElementById("confidence").innerText = "Confidence: " + confidence + "%";
+  </script>
