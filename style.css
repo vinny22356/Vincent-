@@ -1,20 +1,33 @@
 body {
-  background: #0a0f2c;
-  color: purple;
-  text-align: center;
+  background: #0b1a2f;
+  color: white;
   font-family: Arial;
+  text-align: center;
+}
+
+h1 {
+  color: #00d4ff;
 }
 
 button {
+  padding: 12px;
   margin: 10px;
-  padding: 10px 15px;
+  border-radius: 8px;
   border: none;
-  border-radius: 10px;
-  background: #1e2a4a;
+  background: #1e2a3a;
   color: white;
   cursor: pointer;
 }
 
 button:hover {
-  background: #00bfff;
+  background: #00d4ff;
+  color: black;
+}
+
+.card {
+  background: #1e2a3a;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #00d4ff;
 }
