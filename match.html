@@ -1,19 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Team Page</title>
+  <title>Match Predictions</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1 id="teamName"></h1>
+<h1 id="title"></h1>
 
-  <p>Select opponent:</p>
+<div id="matches"></div>
 
-  <div id="opponents"></div>
+<script>
 
-  <script src="team.js"></script>
+// GET DATA
+const team = localStorage.getItem("team");
+const league = localStorage.getItem("league");
+
+document.getElementById("title").innerText = team + " Matches";
+
+// TEAM STRENGTH (AI BASE)
+const strength = {
+"Manchester City":95,"Arsenal":90,"Liverpool":90,"Chelsea":85,"Manchester United":85,
+"Tottenham":87,"Real Madrid":95,"Barcelona":92,"Atletico Madrid":90,
+"Juventus":88,"Inter Milan":91,"AC Milan":89,"Napoli":90,
+"Bayern Munich":96,"Dortmund":89,"Leverkusen":91,
+"Benfica":90,"Porto":89,"Sporting CP":91,"Braga":85,
+"Zenit":90,"CSKA Moscow":86,"Spartak Moscow":85,
+"Club Brugge":88,"Genk":86,"Anderlecht":85
+};
+
+// ALL TEAMS (FOR MATCHES)
+const leagues = {
+"Premier League": ["Manchester City","Arsenal","Liverpool","Chelsea","Manchester United","Tottenham"],
+"La Liga": ["Real Madrid","Barcelona","Atletico Madrid","Sevilla"],
+"Serie A": ["Juventus","Inter Milan","AC Milan","Napoli"],
+"Bundesliga": ["Bayern Munich","Dortmund","Leverkusen"],
+"Portugal": ["Benfica","Porto","Sporting CP","Braga"],
+"Russia": ["Zenit","CSKA Moscow","Spartak Moscow"],
+"Belgium": ["Club Brugge","Genk","Anderlecht"]
+};
+
+const container = document.getElementById("matches");
+
+// CREATE MATCHES
+leagues[league].forEach(opponent => {
+
+  if (opponent !== team) {
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    // AI LOGIC
+    const s1 = strength[team] || 75;
+    const s2 = strength[opponent] || 75;
+
+    let prediction = "";
+    let confidence = Math.min(95, 60 + Math.abs(s1 - s2));
+
+    if (s1 > s2) {
+      prediction = "🔥 " + team + " Win";
+    } else if (s2 > s1) {
+      prediction = "🔥 " + opponent + " Win";
+    } else {
+      prediction = "⚖️ Draw Likely";
+    }
+
+    div.innerHTML = `
+      <h3>${team} vs ${opponent}</h3>
+      <p>${prediction}</p>
+      <p>💰 Over 2.5 | BTTS</p>
+      <p>📊 Confidence: ${confidence}%</p>
+    `;
+
+    container.appendChild(div);
+  }
+
+});
+
+</script>
 
 </body>
 </html>
