@@ -1,49 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Match Analysis</title>
+  <meta charset="UTF-8">
+  <title>Team Page</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1 id="match"></h1>
+  <h1 id="teamName"></h1>
 
-<div class="card">
-  <h2>🤖 AI ANALYSIS</h2>
+  <p>Select opponent:</p>
 
-  <p id="analysis"></p>
-  <p id="best"></p>
-  <p id="safe"></p>
-  <p id="avoid"></p>
-  <p id="confidence"></p>
-</div>
+  <div id="opponents"></div>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const team1 = params.get("team1");
-const team2 = params.get("team2");
-
-document.getElementById("match").innerText = `${team1} VS ${team2}`;
-
-// SIMPLE AI LOGIC
-const random = Math.random();
-
-if (random > 0.6) {
-  document.getElementById("analysis").innerText = "High attacking game expected.";
-  document.getElementById("best").innerText = "🔥 BEST: Over 2.5";
-  document.getElementById("safe").innerText = "💰 SAFE: BTTS";
-  document.getElementById("avoid").innerText = "❌ AVOID: Under 2.5";
-} else {
-  document.getElementById("analysis").innerText = "Tight defensive match.";
-  document.getElementById("best").innerText = "🔥 BEST: Under 2.5";
-  document.getElementById("safe").innerText = "💰 SAFE: Double Chance";
-  document.getElementById("avoid").innerText = "❌ AVOID: Over 3.5";
-}
-
-document.getElementById("confidence").innerText =
-  "Confidence: " + Math.floor(Math.random() * 40 + 60) + "%";
-</script>
+  <script src="team.js"></script>
 
 </body>
 </html>
