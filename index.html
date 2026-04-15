@@ -1,19 +1,80 @@
-<div class="teams">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Football AI App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  <a href="team.html?team=Zenit">
-    <button class="team-btn">Zenit</button>
-  </a>
+<body>
 
-  <a href="team.html?team=CSKA Moscow">
-    <button class="team-btn">CSKA Moscow</button>
-  </a>
+<h1>⚽ Football AI Predictor</h1>
 
-  <a href="team.html?team=Spartak Moscow">
-    <button class="team-btn">Spartak Moscow</button>
-  </a>
+<select id="league" onchange="loadTeams()">
+  <option>Select League</option>
+  <option>Premier League</option>
+  <option>La Liga</option>
+  <option>Serie A</option>
+  <option>Bundesliga</option>
+  <option>Portugal</option>
+  <option>Russia</option>
+  <option>Belgium</option>
+</select>
 
-  <a href="team.html?team=Lokomotiv Moscow">
-    <button class="team-btn">Lokomotiv Moscow</button>
-  </a>
+<div id="teams"></div>
 
-</div>
+<script>
+const leagues = {
+
+"Premier League": [
+"Manchester City","Arsenal","Liverpool","Chelsea","Manchester United","Tottenham"
+],
+
+"La Liga": [
+"Real Madrid","Barcelona","Atletico Madrid","Sevilla"
+],
+
+"Serie A": [
+"Juventus","Inter Milan","AC Milan","Napoli"
+],
+
+"Bundesliga": [
+"Bayern Munich","Dortmund","Leverkusen"
+],
+
+"Portugal": [
+"Benfica","Porto","Sporting CP","Braga"
+],
+
+"Russia": [
+"Zenit","CSKA Moscow","Spartak Moscow"
+],
+
+"Belgium": [
+"Club Brugge","Genk","Anderlecht"
+]
+
+};
+
+function loadTeams() {
+  const league = document.getElementById("league").value;
+  const container = document.getElementById("teams");
+
+  container.innerHTML = "";
+
+  leagues[league].forEach(team => {
+    const btn = document.createElement("button");
+    btn.innerText = team;
+
+    btn.onclick = () => {
+      localStorage.setItem("team", team);
+      localStorage.setItem("league", league);
+      window.location.href = "team.html";
+    };
+
+    container.appendChild(btn);
+  });
+}
+</script>
+
+</body>
+</html>
