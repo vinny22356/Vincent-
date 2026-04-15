@@ -1,89 +1,66 @@
 const leagues = {
-
-  england: [
-    "Arsenal","Aston Villa","Bournemouth","Brentford","Brighton",
-    "Burnley","Chelsea","Crystal Palace","Everton","Fulham",
-    "Liverpool","Luton Town","Manchester City","Manchester United",
-    "Newcastle","Nottingham Forest","Sheffield United",
-    "Tottenham","West Ham","Wolves"
+  premier: [
+    "Manchester City","Arsenal","Liverpool","Chelsea","Manchester United",
+    "Tottenham","Newcastle","Aston Villa","West Ham","Brighton"
   ],
 
-  belgium: [
-    "Anderlecht","Antwerp","Club Brugge","Genk","Gent",
-    "Standard Liege","Charleroi","Mechelen","OH Leuven",
-    "Kortrijk","Eupen","Westerlo","Cercle Brugge",
-    "Sint-Truiden","Union SG","RWDM"
+  laliga: [
+    "Real Madrid","Barcelona","Atletico Madrid","Sevilla","Valencia",
+    "Villarreal","Real Sociedad","Betis"
   ],
 
-  spain: [
-    "Real Madrid","Barcelona","Atletico Madrid","Athletic Bilbao",
-    "Real Sociedad","Sevilla","Valencia","Villarreal",
-    "Real Betis","Osasuna","Celta Vigo","Getafe",
-    "Mallorca","Las Palmas","Girona","Alaves",
-    "Cadiz","Granada","Rayo Vallecano","Espanyol"
+  seriea: [
+    "Inter","AC Milan","Juventus","Napoli","Roma","Lazio","Atalanta"
   ],
 
-  italy: [
-    "Juventus","Inter Milan","AC Milan","Napoli","Roma",
-    "Lazio","Atalanta","Fiorentina","Torino","Bologna",
-    "Sassuolo","Udinese","Empoli","Salernitana",
-    "Verona","Lecce","Cagliari","Genoa","Monza","Parma"
+  bundesliga: [
+    "Bayern Munich","Dortmund","RB Leipzig","Leverkusen","Frankfurt"
   ],
 
   portugal: [
-    "Benfica","Porto","Sporting CP","Braga",
-    "Boavista","Famalicao","Casa Pia","Estoril",
-    "Rio Ave","Gil Vicente","Vizela","Arouca",
-    "Chaves","Farense","Portimonense","Moreirense",
-    "Vitoria Guimaraes","Nacional"
+    "Benfica","Porto","Sporting CP","Braga"
+  ],
+
+  belgium: [
+    "Club Brugge","Genk","Anderlecht","Antwerp"
   ],
 
   russia: [
-    "Zenit","CSKA Moscow","Spartak Moscow","Lokomotiv Moscow",
-    "Dynamo Moscow","Krasnodar","Rubin Kazan","Rostov",
-    "Akhmat Grozny","Ural","Khimki","Sochi",
-    "Orenburg","Baltika","Fakel","Nizhny Novgorod"
-  ],
-
-  germany: [
-    "Bayern Munich","Borussia Dortmund","RB Leipzig",
-    "Bayer Leverkusen","Eintracht Frankfurt",
-    "Wolfsburg","Borussia Monchengladbach",
-    "Union Berlin","Freiburg","Hoffenheim",
-    "Mainz","Augsburg","Werder Bremen",
-    "Stuttgart","Bochum","Heidenheim","Darmstadt","Koln"
+    "Zenit","CSKA Moscow","Spartak Moscow","Lokomotiv Moscow"
   ]
-
 };
 
-let selectedTeams = [];
+let selected = [];
+
+const container = document.getElementById("teams");
+const leagueSelect = document.getElementById("leagueSelect");
 
 function loadTeams() {
-  const league = document.getElementById("leagueSelect").value;
-  const teamsDiv = document.getElementById("teams");
+  container.innerHTML = "";
+  selected = [];
 
-  teamsDiv.innerHTML = "";
-  selectedTeams = [];
+  const teams = leagues[leagueSelect.value];
 
-  leagues[league].forEach(team => {
+  teams.forEach(team => {
     const btn = document.createElement("button");
     btn.innerText = team;
 
-    btn.onclick = () => selectTeam(team);
+    btn.onclick = () => {
+      if (selected.length < 2 && !selected.includes(team)) {
+        selected.push(team);
+        btn.style.background = "green";
+      }
 
-    teamsDiv.appendChild(btn);
+      if (selected.length === 2) {
+        window.location.href =
+          `match.html?team1=${selected[0]}&team2=${selected[1]}`;
+      }
+    };
+
+    container.appendChild(btn);
   });
 }
 
-function selectTeam(team) {
-  if (selectedTeams.length < 2) {
-    selectedTeams.push(team);
-  }
-
-  if (selectedTeams.length === 2) {
-    window.location.href =
-      `match.html?team1=${selectedTeams[0]}&team2=${selectedTeams[1]}`;
-  }
-}
+leagueSelect.onchange = loadTeams;
 
 loadTeams();
